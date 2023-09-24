@@ -1,4 +1,18 @@
 import turtle as t
+import qrnglib
+
+# Test the QRNG API 
+print(f" {'TEST QRNG init (0 => success)' :30}  {qrnglib.qrng_init()} " )
+print(f" {'QRNG urand (double 0.0 - 1.0)' :30}  {qrnglib.qrng_urand()}" )
+print(f" {'TEST QRNG get status ' :30}  {qrnglib.qrng_get_status()}" )
+if qrnglib.qrng_get_status() != 0:
+    print(""" 
+    QRNG not initialized, try any of the following: 
+    1. Ensure the QRNG hardware is plugged in
+    2. Try running the application as a super user (i.e. with 'sudo')   
+    """)
+    exit() 
+
 
 # INITIALIZING
 
@@ -15,8 +29,6 @@ wall = np.zeros((400,400))
 wall[380:, 380:] = 2
 
 # PATH GENERATION
-
-import random
 
 height = 20
 width = 20
@@ -45,7 +57,7 @@ def generate_maze(y, x):
 
     # Shuffle the directions to visit neighbors in random order (until success)
     directions = [(0, -1, 1), (0, 1, 2), (-1, 0, 3), (1, 0, 4)] #up, down, left, right
-    random.shuffle(directions)
+    qrnglib.qrng_shuffle(directions)
 
     for dx, dy, d_index in directions:
         new_x, new_y = x + dx, y + dy
