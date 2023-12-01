@@ -91,7 +91,8 @@ for y in range(height):
         print(array[y, x, 1:], end=' ')
     print()
 '''
-
+import time
+time.sleep(10) 
 # TURN MAZE ARRAY INTO WALLS
 
 t.penup()
